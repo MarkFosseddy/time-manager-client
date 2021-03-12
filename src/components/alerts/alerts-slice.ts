@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
 import { StoreState } from "../../store";
 import { Alert } from "./alerts-types";
 

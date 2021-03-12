@@ -1,21 +1,15 @@
 import React from "react";
+import { useHistory } from "react-router";
 import styled from "styled-components";
-
-import { useAlert, AlertTypes } from "../components/alerts";
-
-import { Header } from "../components/typography/header";
-import { Input  } from "../components/inputs/input";
+import { AlertTypes, useAlert } from "../components/alerts";
 import { PrimaryButton } from "../components/buttons/button";
+import { Input } from "../components/inputs/input";
+import { Header } from "../components/typography/header";
+import { useLogin } from "../features/user";
+import { routes } from "../routing/routes";
 
 export function Login() {
-  const {
-    loading,
-    username,
-    password,
-    handlePasswordChange,
-    handleUsernameChange,
-    handleSubmit
-  } = useLoginForm();
+  const { isLoading, fields, handleFieldChange, handleSubmit } = useLoginForm();
 
   return (
     <Page>
@@ -25,88 +19,27 @@ export function Login() {
         <Input
           className="mb-16"
           label="Username"
-          onChange={handleUsernameChange}
-          value={username}
+          name="username"
+          onChange={handleFieldChange}
+          value={fields.username}
         />
 
         <Input
           className="mb-16"
           label="Password"
           type="password"
-          onChange={handlePasswordChange}
-          value={password}
+          name="password"
+          onChange={handleFieldChange}
+          value={fields.password}
         />
 
-        <PrimaryButton loading={loading}>
+        <PrimaryButton loading={isLoading}>
           Log in
         </PrimaryButton>
       </LoginForm>
     </Page>
   );
 };
-
-type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
-type FormSubmitEvent = React.FormEvent<HTMLFormElement>
-
-function useLoginForm() {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
-
-  const alert = useAlert();
-
-  function handleUsernameChange(event: InputChangeEvent) {
-    setUsername(event.target.value);
-  }
-
-  function handlePasswordChange(event: InputChangeEvent) {
-    setPassword(event.target.value);
-  }
-
-  function handleSubmit(event: FormSubmitEvent) {
-    event.preventDefault();
-    if (loading) return;
-
-    const errors = validate(username, password);
-
-    if (errors.length) {
-      alert.show({
-        type: AlertTypes.Error,
-        text: errors.join(" ")
-      });
-      return;
-    }
-
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  }
-
-  function validate(username: string, password: string): string[] {
-    let errors: string[] = [];
-
-    if (!username.trim().length) {
-      errors.push("Empty username.");
-    }
-
-    if (!password.trim().length) {
-      errors.push("Empty password.");
-    }
-
-    return errors;
-  }
-
-  return {
-    loading,
-    username,
-    password,
-    handleUsernameChange,
-    handlePasswordChange,
-    handleSubmit
-  };
-}
 
 const Page = styled.div`
   background-color: ${({ theme }) => theme.colors.lightAccent};
@@ -128,3 +61,64 @@ const LoginForm = styled.form`
     width: 90%;
   }
 `;
+
+type InputChangeEvent = React.ChangeEvent<HTMLInputElement>
+type FormSubmitEvent = React.FormEvent<HTMLFormElement>
+
+function useLoginForm() {
+  const [fields, setFields] = React.useState({ username: "", password: "" });
+
+  const { login, error: loginError, isLoading, isLoggedIn } = useLogin();
+  const alert = useAlert();
+  const history = useHistory();
+
+  React.useEffect(() => {
+    if (loginError) {
+      alert.show({ type: AlertTypes.Error, text: loginError });
+    }
+  }, [loginError]);
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      history.replace(routes.home);
+    }
+  }, [isLoggedIn]);
+
+  function handleFieldChange(event: InputChangeEvent) {
+    setFields(prev => ({
+      ...prev,
+      [event.target.name]: event.target.value
+    }));
+  }
+
+  async function handleSubmit(event: FormSubmitEvent) {
+    event.preventDefault();
+    if (isLoading) return;
+
+    const { username, password } = fields;
+    const errors = validate(username, password);
+
+    if (errors.length) {
+      alert.show({ type: AlertTypes.Error, text: errors.join(" ") });
+      return;
+    }
+
+    await login(username, password);
+  }
+
+  function validate(username: string, password: string): string[] {
+    let errors: string[] = [];
+
+    if (!username.trim().length) {
+      errors.push("Empty username.");
+    }
+
+    if (!password.trim().length) {
+      errors.push("Empty password.");
+    }
+
+    return errors;
+  }
+
+  return { isLoading, fields, handleFieldChange, handleSubmit };
+}

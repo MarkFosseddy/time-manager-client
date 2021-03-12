@@ -1,6 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
-
+import { Route, Switch } from "react-router-dom";
 import { routes } from "./routes";
 
 const Login = React.lazy(() => import("../pages/login").then(m => ({ default: m.Login })));

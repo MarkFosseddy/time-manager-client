@@ -1,15 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import styled, { ThemeContext } from "styled-components";
-
-import { Alert, AlertTypes } from "./alerts-types";
-
-import { useStoreDispatch, useStoreSelector } from "../../store";
-import { alertsActions, alertsSelectors } from "./alerts-slice";
-
 import { ErrorAlertIcon } from "../../components/icons/error-alert";
 import { Paragraph } from "../../components/typography/paragraph";
 import { Title } from "../../components/typography/title";
+import { useStoreDispatch, useStoreSelector } from "../../store";
+import { alertsActions, alertsSelectors } from "./alerts-slice";
+import { Alert, AlertTypes } from "./alerts-types";
 
 type AlertsContainerProps = React.HTMLAttributes<HTMLUListElement>
 

@@ -1,9 +1,4 @@
-type Routes = {
-  home: string;
-  login: string;
-}
-
-export const routes: Routes = {
+export const routes = {
   home: "/",
   login: "/login"
 };

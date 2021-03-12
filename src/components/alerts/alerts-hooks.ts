@@ -1,7 +1,6 @@
-import { AlertTypes } from "./alerts-types";
-
 import { useStoreDispatch } from "../../store";
 import { alertsActions } from "./alerts-slice";
+import { AlertTypes } from "./alerts-types";
 
 type NewAlert = {
   type: AlertTypes;
