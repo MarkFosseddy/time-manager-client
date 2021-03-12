@@ -25,7 +25,7 @@ const userSlice = createSlice({
       state.isLoggedIn = true;
     },
     logout() {
-      return initialState
+      return initialState;
     }
   }
 });

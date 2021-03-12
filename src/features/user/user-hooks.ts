@@ -33,3 +33,29 @@ export function useLogin() {
 
   return { login, isLoading, error, isLoggedIn };
 }
+
+export function useLogout() {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const dispatch = useStoreDispatch();
+
+  async function logout() {
+    setError(null);
+
+    setIsLoading(true);
+    const { error } = await API.auth.logout();
+    setIsLoading(false);
+
+    if (error) {
+      setError(error);
+      return;
+    }
+
+    localStorage.removeItem(StorageKeys.AccessToken);
+    localStorage.removeItem(StorageKeys.RefreshToken);
+    dispatch(userActions.logout());
+  }
+
+  return { isLoading, error, logout };
+}

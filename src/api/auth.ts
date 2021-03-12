@@ -1,4 +1,5 @@
 import axios, { AxiosError } from "axios";
+import { StorageKeys } from "../types/storage-keys";
 
 type LoginBody = {
   username: string;
@@ -34,9 +35,29 @@ async function login(body: LoginBody) {
       body
     );
 
-    return { data: res.data } as ResponseSuccess<LoginSuccess>
+    return { data: res.data } as ResponseSuccess<LoginSuccess>;
   } catch (err) {
-    return { error: getErrorMessage(err) } as ResponseError
+    return { error: getErrorMessage(err) } as ResponseError;
+  }
+}
+
+async function logout() {
+  try {
+    const config = {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem(StorageKeys.AccessToken)}`
+      }
+    };
+
+    const res = await axios.post(
+      "http://192.168.0.78:8080/api/auth/logout",
+      null,
+      config
+    );
+
+    return { data: res.data } as ResponseSuccess<{ status: string, message: string }>
+  } catch (err) {
+    return { error: getErrorMessage(err) } as ResponseError;
   }
 }
 
@@ -44,4 +65,4 @@ function getErrorMessage(error: AxiosError): string {
   return error.response?.data.message ?? error.message;
 }
 
-export const auth = { login };
+export const auth = { login, logout };
