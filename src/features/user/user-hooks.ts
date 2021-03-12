@@ -1,5 +1,5 @@
 import React from "react";
-import { API } from "../../api";
+import { API } from "../../api/api";
 import { useStoreDispatch } from "../../store";
 import { StorageKeys } from "../../types/storage-keys";
 import { userActions } from "./user-slice";

@@ -1,11 +1,12 @@
 import React from "react";
 import { useHistory } from "react-router";
 import styled from "styled-components";
-import { AlertTypes, useAlert } from "../components/alerts";
+import { useAlert } from "../components/alerts/alerts-hooks";
+import { AlertTypes } from "../components/alerts/alerts-types";
 import { PrimaryButton } from "../components/buttons/button";
 import { Input } from "../components/inputs/input";
 import { Header } from "../components/typography/header";
-import { useLogin } from "../features/user";
+import { useLogin } from "../features/user/user-hooks";
 import { routes } from "../routing/routes";
 
 export function Login() {
