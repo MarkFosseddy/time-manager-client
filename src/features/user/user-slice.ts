@@ -39,7 +39,7 @@ export const userSelectors = {
   selectUser(state: StoreState): User {
     return state.user.user;
   },
-  selectIsLoggedId(state: StoreState): boolean {
+  selectIsLoggedIn(state: StoreState): boolean {
     return state.user.isLoggedIn;
   }
 };
