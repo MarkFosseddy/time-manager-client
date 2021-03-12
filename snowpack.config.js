@@ -13,7 +13,8 @@ module.exports = {
   ],
   packageOptions: {},
   devOptions: {
-    open: "none"
+    open: "none",
+    port: 3000
   },
   buildOptions: {},
 };
