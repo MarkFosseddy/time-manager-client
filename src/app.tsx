@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { AlertsContainer } from "./components/alerts/alerts-components";
 import { AppRoutes } from "./routing/app-routes";
 import { store } from "./store";
+import { GlobalStyles } from "./styling/global-styles";
 import { lightTheme } from "./styling/light-theme";
 
 export function App() {
@@ -12,6 +13,7 @@ export function App() {
     <ReduxProvider store={store}>
       <BrowserRouter>
         <ThemeProvider theme={lightTheme}>
+          <GlobalStyles />
           <AppRoutes />
           <AlertsContainer />
         </ThemeProvider>
