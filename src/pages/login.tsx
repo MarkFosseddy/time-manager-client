@@ -5,6 +5,7 @@ import { useAlert } from "../components/alerts/alerts-hooks";
 import { AlertTypes } from "../components/alerts/alerts-types";
 import { PrimaryButton } from "../components/buttons/button";
 import { Input } from "../components/inputs/input";
+import { Page } from "../components/layout/page";
 import { Header } from "../components/typography/header";
 import { useLogin } from "../features/user/user-hooks";
 import { routes } from "../routing/routes";
@@ -13,7 +14,7 @@ export function Login() {
   const { isLoading, fields, handleFieldChange, handleSubmit } = useLoginForm();
 
   return (
-    <Page>
+    <LoginPage>
       <LoginForm onSubmit={handleSubmit}>
         <Header className="mb-32">Log in</Header>
 
@@ -38,13 +39,11 @@ export function Login() {
           Log in
         </PrimaryButton>
       </LoginForm>
-    </Page>
+    </LoginPage>
   );
 };
 
-const Page = styled.div`
-  background-color: ${({ theme }) => theme.colors.lightAccent};
-  height: 100%;
+const LoginPage = styled(Page)`
   display: flex;
   flex-direction: column;
   align-items: center;
