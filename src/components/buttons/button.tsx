@@ -4,7 +4,7 @@ import { ButtonSpinner } from "../spinners/button-spinner";
 
 
 type Props = React.PropsWithChildren<{
-  loading?: boolean
+  loading?: boolean;
 }> & React.ButtonHTMLAttributes<HTMLButtonElement>
 
 export function PrimaryButton({ children, loading = undefined, ...rest }: Props) {

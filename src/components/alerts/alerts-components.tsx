@@ -33,7 +33,6 @@ const AlertsContainerWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
-  list-style: none;
 
   & > li {
     margin-bottom: .5rem;

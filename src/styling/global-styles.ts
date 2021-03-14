@@ -13,5 +13,9 @@ export const GlobalStyles = createGlobalStyle`
     height: 100%;
   }
 
+  ul {
+    list-style: none;
+  }
+
   ${marginHelpers}
 `;
