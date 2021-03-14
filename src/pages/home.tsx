@@ -3,7 +3,7 @@ import { useAlert } from "../components/alerts/alerts-hooks";
 import { AlertTypes } from "../components/alerts/alerts-types";
 import { PrimaryButton } from "../components/buttons/button";
 import { Page } from "../components/layout/page";
-import { Title } from "../components/typography/title";
+import { Header } from "../components/typography/header";
 import { useLogout } from "../features/user/user-hooks";
 
 export function Home() {
@@ -18,7 +18,7 @@ export function Home() {
 
   return (
     <Page>
-      <Title>Home Page</Title>
+      <Header>Home Page</Header>
 
       <PrimaryButton
         onClick={() => logout()}

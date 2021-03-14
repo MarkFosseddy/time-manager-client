@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
 import { ButtonSpinner } from "../spinners/button-spinner";
+
 
 type Props = React.PropsWithChildren<{
   loading?: boolean
@@ -25,7 +25,6 @@ const Button = styled.button`
   font-size: 1rem;
   font-weight: bold;
   width: 100%;
-  /* height: 35px; */
   height: 2.188rem;
   cursor: pointer;
 

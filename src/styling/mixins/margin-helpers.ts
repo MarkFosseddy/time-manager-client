@@ -13,8 +13,8 @@ const margin = {
     "r": "right",
     "b": "bottom",
     "l": "left",
-    "x": "left right",
-    "y": "top bottom"
+    "x": ["left", "right"],
+    "y": ["top", "bottom"]
   }
 }
 
@@ -25,8 +25,7 @@ export const marginHelpers = css`
     for (const [px, rem] of Object.entries(margin.values)) {
       for (const [truncated, full] of Object.entries(margin.sides)) {
         if (truncated == "x" || truncated == "y") {
-          const sides = full.split(" ");
-          classes += `.m${truncated}-${px} { margin-${sides[0]}: ${rem}rem; margin-${sides[1]}: ${rem}rem; }\n`
+          classes += `.m${truncated}-${px} { margin-${full[0]}: ${rem}rem; margin-${full[1]}: ${rem}rem; }\n`
         } else {
           classes += `.m${truncated}-${px} { margin-${full}: ${rem}rem; }\n`
         }

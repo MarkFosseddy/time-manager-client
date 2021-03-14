@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router";
 import styled from "styled-components";
 import { useAlert } from "../components/alerts/alerts-hooks";
 import { AlertTypes } from "../components/alerts/alerts-types";
@@ -8,7 +7,6 @@ import { Input } from "../components/inputs/input";
 import { Page } from "../components/layout/page";
 import { Header } from "../components/typography/header";
 import { useLogin } from "../features/user/user-hooks";
-import { routes } from "../routing/routes";
 
 export function Login() {
   const { isLoading, fields, handleFieldChange, handleSubmit } = useLoginForm();
@@ -68,21 +66,14 @@ type FormSubmitEvent = React.FormEvent<HTMLFormElement>
 function useLoginForm() {
   const [fields, setFields] = React.useState({ username: "", password: "" });
 
-  const { login, error: loginError, isLoading, isLoggedIn } = useLogin();
+  const { login, isLoading, error: loginError } = useLogin();
   const alert = useAlert();
-  const history = useHistory();
 
   React.useEffect(() => {
     if (loginError) {
       alert.show({ type: AlertTypes.Error, text: loginError });
     }
   }, [loginError]);
-
-  React.useEffect(() => {
-    if (isLoggedIn) {
-      history.replace(routes.home);
-    }
-  }, [isLoggedIn]);
 
   function handleFieldChange(event: InputChangeEvent) {
     setFields(prev => ({

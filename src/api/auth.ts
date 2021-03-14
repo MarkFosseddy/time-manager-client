@@ -1,68 +1,54 @@
-import axios, { AxiosError } from "axios";
-import { StorageKeys } from "../types/storage-keys";
+import { executeRequest } from "./execute-request";
+
+type User = {
+  id: string;
+  username: string;
+}
+
+type LoginResponse = {
+  data: {
+    accessToken: string;
+    refreshToken: string;
+    user: User
+  }
+}
 
 type LoginBody = {
   username: string;
   password: string;
 }
 
-type LoginSuccess = {
-  status: string;
-  message: string;
-  data: {
-    accessToken: string;
-    refreshToken: string;
-    user: {
-      id: string;
-      username: string;
-    }
-  }
-}
-
-type ResponseSuccess<T> = {
-  data: T;
-  error: never
-}
-type ResponseError = {
-  data: never;
-  error: string
-}
-
 async function login(body: LoginBody) {
-  try {
-    const res = await axios.post(
-      "http://192.168.0.78:8080/api/auth/login",
-      body
-    );
-
-    return { data: res.data } as ResponseSuccess<LoginSuccess>;
-  } catch (err) {
-    return { error: getErrorMessage(err) } as ResponseError;
-  }
+  return executeRequest<LoginResponse>({
+    url: "auth/login",
+    method: "POST",
+    body,
+    withToken: false
+  });
 }
 
 async function logout() {
-  try {
-    const config = {
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem(StorageKeys.AccessToken)}`
-      }
-    };
+  return executeRequest({
+    url: "auth/logout",
+    method: "POST"
+  });
+}
 
-    const res = await axios.post(
-      "http://192.168.0.78:8080/api/auth/logout",
-      null,
-      config
-    );
-
-    return { data: res.data } as ResponseSuccess<{ status: string, message: string }>
-  } catch (err) {
-    return { error: getErrorMessage(err) } as ResponseError;
+type GetUserSuccess = {
+  data: {
+    user: User;
   }
 }
 
-function getErrorMessage(error: AxiosError): string {
-  return error.response?.data.message ?? error.message;
+async function getUser() {
+  return executeRequest<GetUserSuccess>({
+    url: "auth/me",
+    method: "POST"
+  });
 }
 
-export const auth = { login, logout };
+export const auth = {
+  login,
+  logout,
+  getUser
+};
