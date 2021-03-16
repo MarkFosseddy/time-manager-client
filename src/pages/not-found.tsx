@@ -2,7 +2,7 @@ import React from "react";
 import { Page } from "../components/layout/page";
 import { Header } from "../components/typography/header";
 
-export function NotFoundPage() {
+export function NotFound() {
   return (
     <Page>
       <Header>

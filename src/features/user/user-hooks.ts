@@ -32,7 +32,7 @@ export function useLogin() {
 
     dispatch(userActions.login(user))
 
-    history.replace(routes.home);
+    history.replace(routes.dashboard.base);
   }
 
   return { login, isLoading, error };

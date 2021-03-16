@@ -1,5 +1,7 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
+import { routes } from "../../routing/routes";
 
 type Props = {
   open: boolean;
@@ -13,7 +15,12 @@ export function SidebarItemList({ open, list }: Props) {
     <ul>
       {list.map(t => (
         <ListItem key={t.id}>
-          {t.title}
+          <NavLink
+            to={`${routes.dashboard.taskList}/${t.id}`}
+            activeStyle={{ color: "red" }}
+          >
+            {t.title}
+          </NavLink>
         </ListItem>
       ))}
     </ul>

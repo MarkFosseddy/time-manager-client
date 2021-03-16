@@ -1,6 +1,7 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
-import { SidebarItem } from "./sidebar-item";
+import { routes } from "../../routing/routes";
 
 type Props = {
   open?: boolean;
@@ -25,24 +26,46 @@ export function Sidebar({ open = true }: Props) {
 
   return (
     <SidebarWrapper>
-      <SidebarItem
-        className="mb-16"
-        title="Tasks"
-        onAddClick={() => console.log("Tasks add clicked")}
-        expandableList={LIST}
-      />
+      <div>
+        <SidebarItemHeader>
+          <Flex>
+            <div className="mr-8">{">"}</div>
+            <div>Tasks</div>
+          </Flex>
+          <div>+</div>
+        </SidebarItemHeader>
+        <ul>
+          {LIST.map(l => (
+            <li key={l.id}>
+              <NavLink
+                to={`${routes.dashboard.taskList}/${l.id}`}
+                activeStyle={{ color: "red" }}
+              >
+                {l.title}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-      <SidebarItem
-        title="Boards"
-        onAddClick={() => console.log("Boards add clicked")}
-        expandableList={LIST}
-      />
     </SidebarWrapper>
   );
 }
 
 const SidebarWrapper = styled.aside`
-  width: 305px;
+  width: 280px;
   background-color: ${({ theme }) => theme.colors.lightAccent};
-  padding: 40px 8px 0 47px;
+  padding: 40px 8px;
 `;
+
+const SidebarItemHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
