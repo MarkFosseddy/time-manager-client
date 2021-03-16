@@ -21,9 +21,9 @@ type LoginBody = {
 async function login(body: LoginBody) {
   return executeRequest<LoginResponse>({
     url: "auth/login",
+    withToken: false,
     method: "POST",
-    body,
-    withToken: false
+    body
   });
 }
 
