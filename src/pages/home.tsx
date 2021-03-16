@@ -1,31 +1,51 @@
 import React from "react";
-import { useAlert } from "../components/alerts/alerts-hooks";
-import { AlertTypes } from "../components/alerts/alerts-types";
+import styled from "styled-components";
 import { PrimaryButton } from "../components/buttons/button";
 import { Page } from "../components/layout/page";
-import { Header } from "../components/typography/header";
-import { useLogout } from "../features/user/user-hooks";
+import { Navbar } from "../components/navbar";
+import { Sidebar } from "../components/sidebar/sidebar";
+import { Paragraph } from "../components/typography/paragraph";
 
 export function Home() {
-  const { isLoading, error, logout } = useLogout();
-  const alert = useAlert();
-
-  React.useEffect(() => {
-    if (error) {
-      alert.show({ type: AlertTypes.Error, text: error });
-    }
-  }, [error]);
+  const [sidebarOpen, setSidebarOpen] = React.useState(true);
 
   return (
-    <Page>
-      <Header>Home Page</Header>
-
-      <PrimaryButton
-        onClick={() => logout()}
-        loading={isLoading}
-      >
-        Log out
-      </PrimaryButton>
-    </Page>
+    <HomePage>
+      <Navbar />
+      <Layout>
+        <Sidebar open={sidebarOpen} />
+        <Main>
+          <Container>
+            <Paragraph>This is main</Paragraph>
+            <PrimaryButton
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              style={{ width: "30%", marginTop: "2rem" }}
+            >
+              Sidebar
+            </PrimaryButton>
+          </Container>
+        </Main>
+      </Layout>
+    </HomePage>
   );
 }
+
+const HomePage = styled(Page)`
+  background-color: ${({ theme }) => theme.colors.lightShade};
+`;
+
+const Main = styled.main`
+  flex: 1;
+`;
+
+const Layout = styled.div`
+  display: flex;
+  /* @TODO: add header height to theme */
+  height: calc(100% - 54px);
+`;
+
+const Container = styled.div`
+  border: 1px solid red;
+  margin: 0 auto;
+  max-width: 70%;
+`;

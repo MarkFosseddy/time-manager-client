@@ -1,11 +1,12 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
+import { PlusFilledIcon, PlusIcon } from "../icons/plus";
 
-import { PlusIcon, PlusFilledIcon } from "../icons/plus";
 
 type Props = React.PropsWithChildren<{}> & React.HtmlHTMLAttributes<HTMLDivElement>
 
 export function AddButton({ children, ...rest }: Props) {
+  const theme = useTheme();
   const [isHovered, setIsHovered] = React.useState(false);
 
   return (
@@ -15,7 +16,7 @@ export function AddButton({ children, ...rest }: Props) {
       {...rest}
     >
       <IconWrapper>
-        {isHovered ? <PlusFilledIcon /> : <PlusIcon />}
+        {isHovered ? <PlusFilledIcon /> : <PlusIcon color={theme.colors.main} />}
       </IconWrapper>
 
       <Button>

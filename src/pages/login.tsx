@@ -75,15 +75,15 @@ function useLoginForm() {
     }
   }, [loginError]);
 
-  function handleFieldChange(event: InputChangeEvent) {
+  function handleFieldChange(e: InputChangeEvent) {
     setFields(prev => ({
       ...prev,
-      [event.target.name]: event.target.value
+      [e.target.name]: e.target.value
     }));
   }
 
-  async function handleSubmit(event: FormSubmitEvent) {
-    event.preventDefault();
+  async function handleSubmit(e: FormSubmitEvent) {
+    e.preventDefault();
     if (isLoading) return;
 
     const { username, password } = fields;
