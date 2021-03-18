@@ -5,7 +5,7 @@ import { AlertTypes } from "../components/alerts/alerts-types";
 import { PrimaryButton } from "../components/buttons/button";
 import { Input } from "../components/inputs/input";
 import { Page } from "../components/layout/page";
-import { Header } from "../components/typography/header";
+import { Heading } from "../components/typography/heading";
 import { useLogin } from "../features/user/user-hooks";
 
 export function Login() {
@@ -14,7 +14,7 @@ export function Login() {
   return (
     <LoginPage>
       <LoginForm onSubmit={handleSubmit}>
-        <Header className="mb-32">Log in</Header>
+        <Heading className="mb-32">Log in</Heading>
 
         <Input
           className="mb-16"

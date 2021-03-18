@@ -5,14 +5,34 @@ import { Page } from "../components/layout/page";
 import { Navbar } from "../components/navbar";
 import { PrivateRoute } from "../components/private-route";
 import { Sidebar } from "../components/sidebar/sidebar";
+import { PageSpinner } from "../components/spinners/page-spinner";
+import { Heading } from "../components/typography/heading";
+import { Paragraph } from "../components/typography/paragraph";
+import { useFetchTasks } from "../features/tasks/tasks-hooks";
 import { routes } from "./routes";
 
-const Home = React.lazy(() => import("../pages/home").then(m => ({ default: m.Home })));
+const Dashboard = React.lazy(() => import("../pages/dashboard").then(m => ({ default: m.Dashboard })));
+const Task = React.lazy(() => import("../pages/task").then(m => ({ default: m.Task })));
 
 export function DashboardRoutes() {
+  const { isLoading, error, fetchTasks } = useFetchTasks();
+
   React.useEffect(() => {
-    console.log("WTIF THIS IS DASHBPARD HOME")
+    fetchTasks();
   }, []);
+
+  if (isLoading) {
+    return <PageSpinner />;
+  }
+
+  if (error) {
+    return (
+      <Page>
+        <Heading className="mb-32">Error accured :(</Heading>
+        <Paragraph>Try to reload the page.</Paragraph>
+      </Page>
+    );
+  }
 
   return (
     <PageWrapper>
@@ -23,11 +43,8 @@ export function DashboardRoutes() {
 
         <Main>
           <Switch>
-            <PrivateRoute exact path={routes.dashboard.base} component={Home} />
-
-            <PrivateRoute exact path={routes.dashboard.taskList + "/:id"}>
-              <h1>This is a task</h1>
-            </PrivateRoute>
+            <PrivateRoute exact path={routes.dashboard.base} component={Dashboard} />
+            <PrivateRoute exact path={routes.dashboard.taskList + "/:id"} component={Task} />
 
             <Redirect to={routes.notFound} />
           </Switch>

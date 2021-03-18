@@ -17,5 +17,9 @@ export const GlobalStyles = createGlobalStyle`
     list-style: none;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   ${marginHelpers}
 `;

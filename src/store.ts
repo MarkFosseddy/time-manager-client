@@ -1,11 +1,13 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { alertsReducer } from "./components/alerts/alerts-slice";
+import { tasksReducer } from "./features/tasks/tasks-slice";
 import { userReducer } from "./features/user/user-slice";
 
 const rootReducer = combineReducers({
   alerts: alertsReducer,
-  user: userReducer
+  user: userReducer,
+  tasks: tasksReducer
 });
 
 export const store = configureStore({

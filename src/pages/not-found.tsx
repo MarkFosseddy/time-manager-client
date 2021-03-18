@@ -1,13 +1,13 @@
 import React from "react";
 import { Page } from "../components/layout/page";
-import { Header } from "../components/typography/header";
+import { Heading } from "../components/typography/heading";
 
 export function NotFound() {
   return (
     <Page>
-      <Header>
+      <Heading>
         404 Not Found :(
-      </Header>
+      </Heading>
     </Page>
   );
 }
