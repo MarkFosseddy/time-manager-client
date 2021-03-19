@@ -3,15 +3,13 @@ import styled from "styled-components";
 import { tasksSelectors } from "../../features/tasks/tasks-slice";
 import { useStoreSelector } from "../../store";
 import { SidebarItem } from "./sidebar-item";
+import { sidebarSelectors } from "./sidebar-slice";
 
-type Props = {
-  open?: boolean;
-};
-
-export function Sidebar({ open = true }: Props) {
+export function Sidebar() {
+  const isOpen = useStoreSelector(sidebarSelectors.selectIsOpen);
   const tasks = useStoreSelector(tasksSelectors.selectAll);
 
-  if (!open) return null;
+  if (!isOpen) return null;
 
   return (
     <SidebarWrapper>

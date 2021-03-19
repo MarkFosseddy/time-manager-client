@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
 import { routes } from "../../routing/routes";
 import { ArrowRightIcon } from "../icons/arrow-right";
+import { IconProps } from "../icons/icons-types";
 import { PlusIcon } from "../icons/plus";
-import { Flex } from "../layout/flex";
+import { Row } from "../layout/row";
 import { Title } from "../typography/title";
 
 type Props = {
@@ -18,6 +19,7 @@ export function SidebarItem({ title, onAddClick, list }: Props) {
 
   const [listOpen, setListOpen] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
+  const [isPlusIconHovered, setIsPlusIconHovered] = React.useState(false);
 
   return (
     <div>
@@ -26,21 +28,27 @@ export function SidebarItem({ title, onAddClick, list }: Props) {
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setListOpen(!listOpen)}
       >
-        <Flex>
-          <ArrowRightIconWrapper isListOpen={listOpen}>
-            <ArrowRightIcon color={theme.colors.darkAccent} />
-          </ArrowRightIconWrapper>
-
+        <Row align="center">
+          <ArrowRightIconAnimated
+            className="mr-8"
+            isListOpen={listOpen}
+            color={theme.colors.darkAccent}
+            size="16"
+          />
           <Title>{title}</Title>
-        </Flex>
+        </Row>
 
         {isHovered &&
-          <PlusIconWrapper onClick={e => {
-            e.stopPropagation();
-            onAddClick(e)
-          }}>
-            <PlusIcon color={theme.colors.darkAccent} />
-          </PlusIconWrapper>
+          <PlusIcon
+            onMouseEnter={() => setIsPlusIconHovered(true)}
+            onMouseLeave={() => setIsPlusIconHovered(false)}
+            color={isPlusIconHovered ? theme.colors.darkShade : theme.colors.darkAccent}
+            size="16"
+            onClick={(e: React.MouseEvent) => {
+              e.stopPropagation();
+              onAddClick(e);
+            }}
+          />
         }
       </SidebarItemContentWrapper>
 
@@ -78,26 +86,13 @@ const SidebarItemContentWrapper = styled.div`
   }
 `;
 
-const IconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const PlusIconWrapper = styled(IconWrapper)`
-  :hover {
-    path {
-      fill: ${({ theme }) => theme.colors.darkShade};
-    }
-  }
-`;
-
-const ArrowRightIconWrapper = styled(IconWrapper)<{ isListOpen: boolean }>`
-  margin-right: .5rem;
-  svg {
-    ${props => props.isListOpen ? "transform: rotate(90deg);" : "transform: rotate(0);"}
-    transition: all .2s ease;
-  }
+type ArrowRightIconAnimatedProps = { isListOpen: boolean; } & IconProps
+const ArrowRightIconAnimated = styled(({
+  isListOpen,
+  ...rest
+}: ArrowRightIconAnimatedProps) => <ArrowRightIcon {...rest} />)`
+  ${({ isListOpen }) => isListOpen ? "transform: rotate(90deg);" : "transform: rotate(0);"}
+  transition: transform .2s ease;
 `;
 
 const StyledNavLink = styled(NavLink)`

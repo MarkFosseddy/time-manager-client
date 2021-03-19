@@ -1,11 +1,11 @@
 import React from 'react';
+import { IconProps } from './icons-types';
 
-type Props = {
-  color?: string;
-  size?: string;
-} & React.SVGAttributes<SVGElement>
-
-export function ArrowRightIcon({ color = "#000000", size = "24", ...rest }: Props) {
+export function ArrowRightIcon({
+  color = "#000000",
+  size = "24",
+  ...rest
+}: IconProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
