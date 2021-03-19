@@ -1,8 +1,8 @@
 import React from "react";
 import { Redirect, Switch } from "react-router";
 import styled from "styled-components";
+import { Header } from "../components/header/header";
 import { Page } from "../components/layout/page";
-import { Navbar } from "../components/navbar";
 import { PrivateRoute } from "../components/private-route";
 import { Sidebar } from "../components/sidebar/sidebar";
 import { PageSpinner } from "../components/spinners/page-spinner";
@@ -11,8 +11,12 @@ import { Paragraph } from "../components/typography/paragraph";
 import { useFetchTasks } from "../features/tasks/tasks-hooks";
 import { routes } from "./routes";
 
-const Dashboard = React.lazy(() => import("../pages/dashboard").then(m => ({ default: m.Dashboard })));
-const Task = React.lazy(() => import("../pages/task").then(m => ({ default: m.Task })));
+const Dashboard = React.lazy(() =>
+  import("../pages/dashboard").then(m => ({ default: m.Dashboard }))
+);
+const Task = React.lazy(() =>
+  import("../pages/task").then(m => ({ default: m.Task }))
+);
 
 export function DashboardRoutes() {
   const { isLoading, error, fetchTasks } = useFetchTasks();
@@ -36,7 +40,7 @@ export function DashboardRoutes() {
 
   return (
     <PageWrapper>
-      <Navbar />
+      <Header />
 
       <Layout>
         <Sidebar />
@@ -64,6 +68,5 @@ const Main = styled.main`
 
 const Layout = styled.div`
   display: flex;
-  /* @TODO: add header height to theme */
-  height: calc(100% - 54px);
+  height: calc(100% - ${({ theme }) => theme.header});
 `;

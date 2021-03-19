@@ -35,7 +35,9 @@ export function Task() {
 
   return (
     <Container>
-      <Heading className="mb-16">{task.title}</Heading>
+      <Heading className="mb-16">
+        {task.title}
+      </Heading>
 
       {task.tasks.length > 0 &&
         <ul className="mb-8">
