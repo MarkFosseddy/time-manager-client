@@ -84,4 +84,5 @@ const UserAvatar = styled(IconWrapper)`
 
 const UserInitial = styled(Paragraph)`
   color: ${({ theme }) => theme.colors.lightShade};
+  font-weight: bold;
 `;

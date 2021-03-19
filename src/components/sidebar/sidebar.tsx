@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { tasksSelectors } from "../../features/tasks/tasks-slice";
 import { useStoreSelector } from "../../store";
 import { SidebarItem } from "./sidebar-item";
 import { sidebarSelectors } from "./sidebar-slice";
 
 export function Sidebar() {
   const isOpen = useStoreSelector(sidebarSelectors.selectIsOpen);
-  const tasks = useStoreSelector(tasksSelectors.selectAll);
 
   if (!isOpen) return null;
 
@@ -15,7 +13,7 @@ export function Sidebar() {
     <SidebarWrapper>
       <SidebarItem
         title="Tasks"
-        list={tasks}
+        list={[]}
         onAddClick={() => console.log("Add new task clicked")}
       />
 

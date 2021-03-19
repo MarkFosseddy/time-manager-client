@@ -40,10 +40,13 @@ export function SidebarItem({ title, onAddClick, list }: Props) {
 
         {isHovered &&
           <PlusIcon
+            size="16"
             onMouseEnter={() => setIsPlusIconHovered(true)}
             onMouseLeave={() => setIsPlusIconHovered(false)}
-            color={isPlusIconHovered ? theme.colors.darkShade : theme.colors.darkAccent}
-            size="16"
+            color={isPlusIconHovered
+              ? theme.colors.darkShade
+              : theme.colors.darkAccent
+            }
             onClick={(e: React.MouseEvent) => {
               e.stopPropagation();
               onAddClick(e);
