@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { StoreState } from "../../store";
 
 type SliceState = {
@@ -13,8 +13,8 @@ const sidebarSlice = createSlice({
   name: "sidebar",
   initialState,
   reducers: {
-    setIsOpen(state, action: PayloadAction<boolean>) {
-      state.isOpen = action.payload;
+    toggle(state) {
+      state.isOpen = !state.isOpen;
     }
   }
 });

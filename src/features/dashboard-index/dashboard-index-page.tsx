@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Heading } from "../components/typography/heading";
+import { Heading } from "../../components/typography/heading";
 
-export function Dashboard() {
+export function DashboardIndexPage() {
   return (
     <Container>
       <Heading>This is main</Heading>

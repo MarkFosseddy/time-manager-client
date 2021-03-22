@@ -16,8 +16,8 @@ const initialState = {
   isLoggedIn: false
 } as SliceState;
 
-const userSlice = createSlice({
-  name: "user",
+const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {
     login(state, action: PayloadAction<User>) {
@@ -31,15 +31,16 @@ const userSlice = createSlice({
 });
 
 export const {
-  reducer: userReducer,
-  actions: userActions
-} = userSlice;
+  reducer: authReducer, 
+  actions: authActions
+} = authSlice;
 
-export const userSelectors = {
+export const authSelectors = {
   selectUser(state: StoreState): User {
-    return state.user.user;
+    return state.auth.user;
   },
   selectIsLoggedIn(state: StoreState): boolean {
-    return state.user.isLoggedIn;
+    return state.auth.isLoggedIn;
   }
 };
+

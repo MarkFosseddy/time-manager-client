@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import { useAlert } from "../components/alerts/alerts-hooks";
-import { AlertTypes } from "../components/alerts/alerts-types";
-import { PrimaryButton } from "../components/buttons/button";
-import { Input } from "../components/inputs/input";
-import { Page } from "../components/layout/page";
-import { Heading } from "../components/typography/heading";
-import { useLogin } from "../features/user/user-hooks";
+import { useAlert } from "../../features/alerts/use-alert";
+import { AlertTypes } from "../../features/alerts/alerts-types";
+import { PrimaryButton } from "../../components/buttons/button";
+import { Input } from "../../components/inputs/input";
+import { Page } from "../../components/layout/page";
+import { Heading } from "../../components/typography/heading";
+import { useLogin } from "./use-login";
 
-export function Login() {
+export function LoginPage() {
   const { isLoading, fields, handleFieldChange, handleSubmit } = useLoginForm();
 
   return (
-    <LoginPage>
+    <LoginPageWrapper>
       <LoginForm onSubmit={handleSubmit}>
         <Heading className="mb-32">Log in</Heading>
 
@@ -37,11 +37,11 @@ export function Login() {
           Log in
         </PrimaryButton>
       </LoginForm>
-    </LoginPage>
+    </LoginPageWrapper>
   );
 };
 
-const LoginPage = styled(Page)`
+const LoginPageWrapper = styled(Page)`
   display: flex;
   flex-direction: column;
   align-items: center;

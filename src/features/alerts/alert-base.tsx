@@ -1,74 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import styled, { ThemeContext } from "styled-components";
-import { ErrorAlertIcon } from "../../components/icons/error-alert";
+import styled from "styled-components";
 import { Paragraph } from "../../components/typography/paragraph";
 import { Title } from "../../components/typography/title";
-import { useStoreDispatch, useStoreSelector } from "../../store";
-import { alertsActions, alertsSelectors } from "./alerts-slice";
-import { Alert, AlertTypes } from "./alerts-types";
-
-type AlertsContainerProps = React.HTMLAttributes<HTMLUListElement>
-
-export function AlertsContainer(props: AlertsContainerProps) {
-  const alerts = useStoreSelector(alertsSelectors.selectAll);
-
-  if (!alerts.length) return null;
-
-  return (
-    ReactDOM.createPortal(
-      <AlertsContainerWrapper {...props}>
-        {alerts.map(a => <AlertFactory key={a.id} item={a} />)}
-      </AlertsContainerWrapper>,
-      document.body
-    )
-  );
-}
-
-const AlertsContainerWrapper = styled.ul`
-  position: fixed;
-  top: 0;
-  padding-top: 1rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  & > li {
-    margin-bottom: .5rem;
-  }
-
-  li:last-child {
-    margin-bottom: 0;
-  }
-`;
-
-type AlertProps = { item: Alert; }
-type AlertFactoryProps = AlertProps
-
-function AlertFactory({ item }: AlertFactoryProps) {
-  if (item.type === AlertTypes.Error) {
-    return <AlertError item={item} />;
-  }
-
-  return null;
-}
-
-type AlertErrorProps = AlertProps
-
-function AlertError({ item }: AlertErrorProps) {
-  const theme = React.useContext(ThemeContext);
-
-  return (
-    <AlertBase
-      title="Error"
-      id={item.id}
-      text={item.text}
-      color={theme.colors.alerts.error}
-      icon={<ErrorAlertIcon />}
-    />
-  );
-}
+import { useStoreDispatch } from "../../store";
+import { alertsActions } from "./alerts-slice";
 
 type AlertBaseProps = {
   id: string;
@@ -78,7 +13,7 @@ type AlertBaseProps = {
   color: string;
 };
 
-function AlertBase({ icon, title, text, color, id }: AlertBaseProps) {
+export function AlertBase({ icon, title, text, color, id }: AlertBaseProps) {
   const dispatch = useStoreDispatch();
 
   React.useEffect(() => {

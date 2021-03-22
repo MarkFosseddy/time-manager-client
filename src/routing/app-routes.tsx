@@ -1,17 +1,40 @@
 import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { PrivateRoute } from "../components/private-route";
+import { PrivateRoute } from "./private-route";
 import { DashboardRoutes } from "./dashboard-routes";
 import { routes } from "./routes";
+import { useAutoLogin } from "../features/auth/use-auto-login";
+import { useAlert } from "../features/alerts/use-alert";
+import { AlertTypes } from "../features/alerts/alerts-types";
+import { PageSpinner } from "../components/spinners/page-spinner";
 
-const Login = React.lazy(() =>
-  import("../pages/login").then(m => ({ default: m.Login }))
+const LoginPage = React.lazy(() =>
+  import("../features/auth/login-page").then(m => ({ default: m.LoginPage }))
 );
-const NotFound = React.lazy(() =>
-  import("../pages/not-found").then(m => ({ default: m.NotFound }))
+const NotFoundPage = React.lazy(() =>
+  import("../features/not-found").then(m => ({ default: m.NotFoundPage }))
 );
 
 export function AppRoutes() {
+  const { isLoading, error, autoLogin } = useAutoLogin();
+  const alert = useAlert();
+
+  React.useEffect(() => {
+    autoLogin();
+  }, []);
+
+  React.useEffect(() => {
+    if (error) {
+      alert.show({ type: AlertTypes.Error, text: error });
+    }
+  }, [error]);
+
+  if (isLoading) {
+    return (
+      <PageSpinner />
+    )
+  }
+
   return (
     <React.Suspense fallback={<div></div>}>
       <Switch>
@@ -19,10 +42,10 @@ export function AppRoutes() {
           <Redirect to={routes.dashboard.base} />
         </Route>
 
-        <Route exact path={routes.login} component={Login} />
+        <Route exact path={routes.login} component={LoginPage} />
         <PrivateRoute path={routes.dashboard.base} component={DashboardRoutes} />
 
-        <Route path="*" component={NotFound} />
+        <Route path="*" component={NotFoundPage} />
       </Switch>
     </React.Suspense>
   );

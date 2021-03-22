@@ -17,6 +17,7 @@ const PageSpinnerWrapper = styled(Page)`
   justify-content: center;
 `;
 
+// @TODO: refactor this because button spinner uses the same code
 const spin = keyframes`
   from {
     transform: rotate(0deg);

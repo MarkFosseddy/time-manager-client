@@ -7,3 +7,7 @@ export type Alert = {
   type: AlertTypes;
   text: string;
 }
+
+export type AlertProps = {
+  data: Alert;
+}
